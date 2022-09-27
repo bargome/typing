@@ -6,6 +6,7 @@ window.onload = function() {
     var text_input = document.getElementById("text_input");
 
     document.getElementById("text_type").onclick = function() {
+        document.getElementById("language_text").scrollIntoView();
         text_input.scrollLeft = text_input.scrollWidth;
         text_input.selectionStart = text_input.value.length;
         text_input.focus();
