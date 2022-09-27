@@ -4,8 +4,11 @@ window.onload = function() {
     var mistake = 0;
     var mistake_arr = [];
     var text_input = document.getElementById("text_input");
+    // text_input.style.opacity = "0";
+    // text_input.style.maxWidth = "0"
+    // document.getElementById("text_type").style.opacity = "0";
 
-    document.getElementById("text_type").onclick = function() {
+    document.getElementById("language_text").onclick = function() {
         document.getElementById("language_text").scrollIntoView();
         text_input.scrollLeft = text_input.scrollWidth;
         text_input.selectionStart = text_input.value.length;
