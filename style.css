@@ -16,30 +16,31 @@ DaunPenh
 */
 
 body {
-    background-color: rgb(27, 43, 34);
+    background-color: rgb(26 28 27);
     margin: 10px 10px;
     overflow-x: hidden;
 }
 
 .same {
-    min-height: 80px;
-    background-color: rgb(21, 63, 46);
-    font-size: 28px;
+    /* min-height: 80px; */
+    background-color: rgb(36 41 38);
+    font-size: 24px;
     height: fit-content;
     text-align: center;
-    color: #68E468;
+    /* color: #68E468; */
+    color: #7e8b7e;
     margin: 0 auto;
     box-sizing: border-box;
 }
 
 div#language_title {
     width: 90%;
-    min-width: 400px;
+    min-width: 300px;
     min-height: fit-content;
     height: fit-content;
     border-radius: 100px;
-    background-color: rgb(18, 51, 38);
-    font-size: 50px;
+    background-color: rgb(29 38 35);
+    font-size: 36px;
     font-family: Bahnschrift;
 }
 
@@ -50,30 +51,38 @@ div.indent {
 
 div#language_text {
     width: 90%;
-    min-width: 400px;
+    min-width: 300px;
+    min-height: max-content;
+    /* height: max-content; */
     font-family: MS UI Gothic;
     font-family: Arial, Helvetica, sans-serif;
     font-family: proxima, Arial, Tahoma, Verdana, sans-serif;
+    font-family: Bahnschrift;
+    /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif; */
     padding: 1px 4%;
     /* box-sizing: border-box; */
     border-radius: 40px;
 }
 
+p#correct>font {
+    transition: 0.1s ease;
+}
+
 div#text_type {
     width: 90%;
-    min-width: 400px;
-    font-family: MS UI Gothic;
+    min-width: 300px;
     border-radius: 40px;
     /* height: 20px; */
 }
 
 input#text_input {
     width: 80%;
-    font-family: MS UI Gothic;
+    min-height: 40px;
     outline: none;
     border: none;
-    font-family: Arial, Helvetica, sans-serif;
-    font-family: Consolas;
+    /* font-family: Arial, Helvetica, sans-serif; */
+    /* font-family: Consolas; */
+    font-family: Bahnschrift;
 }
 
 div#trust {
@@ -104,24 +113,49 @@ div#trust.false {
     /* font-family: Consolas; */
 }
 
+.char.incor {
+    color: rgb(226, 128, 128);
+    animation-name: incor;
+    animation-duration: 0.5s;
+}
+
+@keyframes incor {
+    10% {
+        color: rgb(255, 0, 0);
+    }
+}
+
 .char.non-cor {
-    color: #68E468;
+    /* color: #68E468; */
+    /* color: #9aa99a; */
+    color: #7e8b7e;
 }
 
 .char.cor {
-    color: #C1FCC1;
+    /* color: #C1FCC1; */
+    /* font-size: 28px; */
+    color: #b4c0af;
+    animation-name: cor;
+    animation-duration: 0.5s;
+}
+
+@keyframes cor {
+    10% {
+        color: #a7e28f;
+    }
 }
 
 div#test_end {
     position: relative;
-    font-size: 30px;
+    font-size: 24px;
     aspect-ratio: calc(16/9);
     /* min-height: 300px; */
     /* height: 370px; */
     /* height: 300px;
     width: 400px; */
-    min-width: 200px;
-    max-width: 500px;
+    max-height: fit-content;
+    min-width: 300px;
+    /* width: 500px; */
     width: 30%;
     /* width: 500px; */
     margin: auto;
@@ -130,7 +164,8 @@ div#test_end {
     font-family: Bahnschrift;
 }
 
-.html5-video-container {
+
+/* .html5-video-container {
     min-height: 300px;
 }
 
@@ -138,7 +173,7 @@ div>video.html5-main-video {
     height: 100%;
     left: 0px;
     top: 0px;
-}
+} */
 
 .anim {
     animation-name: anim;

@@ -29,15 +29,16 @@ window.onload = function() {
     elem = document.getElementById("trust");
     elem_move = ((screen.width - 36 - parseInt(window.getComputedStyle(elem).width.replace("px", ""))) / text_length)
     beginned = false;
+
+    distrust_count = 0;
     text_input.oninput = function(e) {
         if (beginned == false) {
             beginned = true;
             start = new Date();
         }
-
+        trust_count = 0;
         input_value = text_input.value;
         input_len = input_value.length;
-        trust_count = 0;
         for (let index = 0; index < text_length; index++) {
             if (text.slice(0, index) == input_value.slice(0, index)) {
                 trust_count++;
@@ -47,20 +48,7 @@ window.onload = function() {
             }
         }
         if (text.slice(0, trust_count) != input_value.slice(0, trust_count)) trust_count--;
-        console.log(trust_count)
 
-        for (i = 0; i < trust_count; i++) {
-            if (all_char[i].classList.contains("non-cor")) {
-                all_char[i].classList.remove("non-cor");
-                all_char[i].classList.add("cor");
-            }
-        }
-        for (i = trust_count; i < text_length; i++) {
-            if (all_char[i].classList.contains("cor")) {
-                all_char[i].classList.remove("cor");
-                all_char[i].classList.add("non-cor");
-            }
-        }
 
         // document.getElementById("text_input_test").value = text.slice(0, trust_count);
 
@@ -71,6 +59,7 @@ window.onload = function() {
                 }
                 elem.classList.toggle("true")
             }
+            distrust_count = 0;
 
             elem.style.right = `${-trust_count*elem_move}px`
                 // elem.style.right = "-10px";
@@ -80,6 +69,7 @@ window.onload = function() {
                 if (elem.classList.contains("true")) {
                     elem.classList.toggle("true")
                     mistake++;
+
                     mistake_arr.push(text[trust_count])
                 }
                 elem.classList.toggle("false")
@@ -88,13 +78,66 @@ window.onload = function() {
             // if (e.inputType == "deleteContentBackward")
             if (e.inputType == "deleteContentBackward") {
                 // mistakes--;
+                distrust_count--;
             } else {
                 mistakes++;
+                distrust_count++;
                 // mistake_arr.push(text[trust_count])
 
             }
             // elem.style.backgroundColor = "red";
         }
+
+        // for (i = trust_count; i < Math.min(trust_count + distrust_count, text_length); i++) {
+        //     console.log(all_char[i])
+        //     if (all_char[i].classList.contains("incor")) {
+        //     } else {
+        //         all_char[i].classList.add("incor");
+        //     }
+        // }
+
+        // for (i = trust_count; i < text_length; i++) {
+        //     console.log(all_char[i])
+        //     if (all_char[i].classList.contains("incor")) {
+        //     } else {
+        //         all_char[i].classList.add("incor");
+        //     }
+        // }
+
+        for (i = 0; i < trust_count; i++) {
+            if (all_char[i].classList.contains("non-cor")) {
+                all_char[i].classList.remove("non-cor");
+                all_char[i].classList.add("cor");
+            }
+            if (all_char[i].classList.contains("incor")) {
+                all_char[i].classList.remove("incor");
+                all_char[i].classList.add("cor");
+            }
+        }
+        for (i = trust_count; i < text_length; i++) {
+            if (i < Math.min(trust_count + distrust_count, text_length)) {
+                if (all_char[i].classList.contains("cor")) {
+                    all_char[i].classList.remove("cor");
+                    all_char[i].classList.add("incor");
+                }
+                if (all_char[i].classList.contains("non-cor")) {
+                    all_char[i].classList.remove("non-cor");
+                    all_char[i].classList.add("incor");
+                }
+
+            } else {
+                if (all_char[i].classList.contains("cor")) {
+                    all_char[i].classList.remove("cor");
+                    all_char[i].classList.add("non-cor");
+                }
+                if (all_char[i].classList.contains("incor")) {
+                    all_char[i].classList.remove("incor");
+                    all_char[i].classList.add("non-cor");
+                }
+            }
+        }
+
+
         if (trust_count == text_length) {
             // sleep(6000)
             document.getElementById("test_end").classList.add("anim")
@@ -161,7 +204,6 @@ function getResolution() {
 function mostUsedLetters(sourceString) {
     // фильтруем строку, оставив только буквы
     // const filteredStr = sourceString.toLowerCase().replace(/[^а-яё]/g, '');
-    console.log(sourceString);
     // считаем в объект кол-во вхождений каждой буквы, используя ее как ключ
     const charsCount = {};
     for (const chr of sourceString)
