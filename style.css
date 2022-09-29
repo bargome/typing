@@ -15,6 +15,10 @@ DaunPenh
 .Segoe UI
 */
 
+html {
+    overflow-x: hidden;
+}
+
 body {
     background-color: rgb(26 28 27);
     margin: 10px 10px;
@@ -160,15 +164,22 @@ div#trust.false {
 }
 
 #caretka {
+    -moz-user-select: -moz-none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
     position: relative;
+    letter-spacing: -24px;
+    font-stretch: ultra-condensed;
+    right: 3px;
+    font-size: 24px;
     color: rgb(172, 170, 140);
 }
 
 #caretka.flashing {
     animation-name: flashing;
     animation-duration: 1s;
-    letter-spacing: 0;
-    word-spacing: 0;
     animation-iteration-count: infinite;
 }
 
@@ -182,6 +193,7 @@ div#trust.false {
 }
 
 div#test_end {
+    overflow: hidden;
     position: relative;
     font-size: 24px;
     aspect-ratio: calc(16/9);
@@ -210,35 +222,35 @@ div#test_end {
         left: 0px;
     }
     20% {
-        left: 120px;
+        left: 10%;
     }
     45% {
-        left: -1200px;
+        left: -90%;
         opacity: 1;
     }
     45.1% {
-        left: -1000px;
+        left: -90%;
         opacity: 0;
     }
     45.2% {
-        left: 1000px;
+        left: 90%;
         opacity: 0;
     }
     45.3% {
-        left: 1000px;
+        left: 90%;
         opacity: 1;
     }
     70% {
-        left: -100px;
+        left: -8%;
     }
     84% {
-        left: 70px
+        left: 7%
     }
     93% {
-        left: -20px
+        left: -2%
     }
     99% {
-        left: 8px;
+        left: 1%;
     }
     100% {
         left: 0px

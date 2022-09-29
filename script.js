@@ -9,7 +9,7 @@ window.onload = function() {
     document.getElementById("correct").innerText = text;
     var text_length = text.length;
     b = document.getElementById("correct").innerHTML.split("")
-    console.log(text)
+
     for (i = 0; i < text_length; i++) {
         if (b[i] == " ") {
             b[i] = "<font class='char non-cor space'>" + b[i] + "</font>"
@@ -40,7 +40,6 @@ window.onload = function() {
     }
 
     all_char = document.getElementsByClassName("char")
-    console.log(all_char)
     elem = document.getElementById("trust");
     elem_move = ((screen.width - 36 - parseInt(window.getComputedStyle(elem).width.replace("px", ""))) / text_length)
     beginned = false;
@@ -190,9 +189,6 @@ window.onload = function() {
             curPositionOld = curPositionNew
         }
     });
-    // text_input.onfocus = function(event) {
-    //     caretka.classList.add("flashing")
-    // }
     text_input.addEventListener('focusin', (event) => {
         caretka.classList.add("flashing")
     });
