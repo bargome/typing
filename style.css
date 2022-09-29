@@ -61,7 +61,7 @@ div#language_text {
     /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif; */
     padding: 1px 4%;
     /* box-sizing: border-box; */
-    border-radius: 40px;
+    border-radius: 30px;
 }
 
 p#correct>font {
@@ -72,18 +72,18 @@ div#text_type {
     max-width: 0;
     opacity: 0;
     position: absolute;
-    top: 25%;
+    top: 40%;
     right: 35%;
-    width: 90%;
-    min-width: 300px;
-    border-radius: 40px;
+    /* width: 90%; */
+    max-width: 1px;
+    /* border-radius: 40px; */
     /* height: 20px; */
 }
 
 input#text_input {
     opacity: inherit;
     width: 80%;
-    min-height: 40px;
+    max-height: 10px;
     outline: none;
     border: none;
     /* font-family: Arial, Helvetica, sans-serif; */
@@ -131,15 +131,23 @@ div#trust.false {
     }
 }
 
+.char.incor.space {
+    background-color: rgb(226, 128, 128);
+    animation-name: incorSpace;
+    animation-duration: 0.5s;
+}
+
+@keyframes incorSpace {
+    10% {
+        background-color: rgb(255, 0, 0);
+    }
+}
+
 .char.non-cor {
-    /* color: #68E468; */
-    /* color: #9aa99a; */
     color: #7e8b7e;
 }
 
 .char.cor {
-    /* color: #C1FCC1; */
-    /* font-size: 28px; */
     color: #b4c0af;
     animation-name: cor;
     animation-duration: 0.5s;
@@ -148,6 +156,28 @@ div#trust.false {
 @keyframes cor {
     10% {
         color: #a7e28f;
+    }
+}
+
+#caretka {
+    position: relative;
+    color: rgb(172, 170, 140);
+}
+
+#caretka.flashing {
+    animation-name: flashing;
+    animation-duration: 1s;
+    letter-spacing: 0;
+    word-spacing: 0;
+    animation-iteration-count: infinite;
+}
+
+@keyframes flashing {
+    40% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
     }
 }
 
@@ -165,7 +195,7 @@ div#test_end {
     width: 35%;
     /* width: 500px; */
     margin: auto;
-    border-radius: 40px;
+    border-radius: 30px;
     padding: 1px 40px;
     font-family: Bahnschrift;
 }

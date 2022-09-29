@@ -4,9 +4,33 @@ window.onload = function() {
     var mistake = 0;
     var mistake_arr = [];
     var text_input = document.getElementById("text_input");
-    // text_input.style.opacity = "0";
-    // text_input.style.maxWidth = "0"
-    // document.getElementById("text_type").style.opacity = "0";
+
+    var text = document.getElementById("correct").innerText.replace(/(\r\n|\n|\r)/gm, "").replace("|", "");
+    document.getElementById("correct").innerText = text;
+    var text_length = text.length;
+    b = document.getElementById("correct").innerHTML.split("")
+    console.log(text)
+    for (i = 0; i < text_length; i++) {
+        if (b[i] == " ") {
+            b[i] = "<font class='char non-cor space'>" + b[i] + "</font>"
+        } else {
+            b[i] = "<font class='char non-cor'>" + b[i] + "</font>";
+        }
+    }
+    c = "";
+    for (i = 0; i <= b.length - 1; i++) {
+        c += b[i];
+    }
+    document.getElementById("correct").innerHTML = c
+    caretka = document.createElement("span");
+    caretka.id = "caretka";
+    caretka.innerText = "|";
+    document.getElementById("correct").prepend(caretka)
+    itemListParent = document.querySelector("#correct")
+    itemList = document.querySelector("#correct").childNodes
+
+    curPositionOld = 0
+    curPositionNew = 1
 
     document.getElementById("language_text").onclick = function() {
         document.getElementById("language_text").scrollIntoView();
@@ -15,21 +39,8 @@ window.onload = function() {
         text_input.focus();
     }
 
-    var text = document.getElementById("correct").innerText.replace(/(\r\n|\n|\r)/gm, "");
-    document.getElementById("correct").innerText = text;
-    var text_length = text.length;
-
-    b = document.getElementById("correct").innerHTML.split("")
-    for (i = 0; i < text_length; i++) {
-        b[i] = "<font class='char non-cor'>" + b[i] + "</font>";
-    }
-    c = "";
-    for (i = 0; i <= b.length - 1; i++) {
-        c += b[i];
-    }
-    document.getElementById("correct").innerHTML = c
-
     all_char = document.getElementsByClassName("char")
+    console.log(all_char)
     elem = document.getElementById("trust");
     elem_move = ((screen.width - 36 - parseInt(window.getComputedStyle(elem).width.replace("px", ""))) / text_length)
     beginned = false;
@@ -53,8 +64,15 @@ window.onload = function() {
         }
         if (text.slice(0, trust_count) != input_value.slice(0, trust_count)) trust_count--;
 
-
-        // document.getElementById("text_input_test").value = text.slice(0, trust_count);
+        curPositionNew = e.target.selectionStart
+        if (curPositionNew == curPositionOld + 1) {
+            itemListParent.insertBefore(itemList[curPositionNew], itemList[curPositionOld])
+        } else if (curPositionNew > curPositionOld) {
+            itemListParent.insertBefore(itemList[curPositionOld], itemList[curPositionNew + 1])
+        } else if (curPositionNew < curPositionOld) {
+            itemListParent.insertBefore(itemList[curPositionOld], itemList[curPositionNew])
+        }
+        curPositionOld = curPositionNew
 
         if (text[input_len - 1] == input_value[input_len - 1] && input_len == trust_count) {
             if (!elem.classList.contains("true")) {
@@ -63,51 +81,25 @@ window.onload = function() {
                 }
                 elem.classList.toggle("true")
             }
-            distrust_count = 0;
-
             elem.style.right = `${-trust_count*elem_move}px`
-                // elem.style.right = "-10px";
-                // elem.style.backgroundColor = "chartreuse";
         } else {
             if (!elem.classList.contains("false")) {
                 if (elem.classList.contains("true")) {
                     elem.classList.toggle("true")
                     mistake++;
-
                     mistake_arr.push(text[trust_count])
                 }
                 elem.classList.toggle("false")
             }
 
-            // if (e.inputType == "deleteContentBackward")
             if (e.inputType == "deleteContentBackward") {
                 // mistakes--;
-                distrust_count--;
             } else {
                 mistakes++;
-                distrust_count++;
-                // mistake_arr.push(text[trust_count])
-
             }
-            // elem.style.backgroundColor = "red";
         }
 
-        // for (i = trust_count; i < Math.min(trust_count + distrust_count, text_length); i++) {
-        //     console.log(all_char[i])
-        //     if (all_char[i].classList.contains("incor")) {
-        //     } else {
-        //         all_char[i].classList.add("incor");
-        //     }
-        // }
-
-        // for (i = trust_count; i < text_length; i++) {
-        //     console.log(all_char[i])
-        //     if (all_char[i].classList.contains("incor")) {
-        //     } else {
-        //         all_char[i].classList.add("incor");
-        //     }
-        // }
-
+        distrust_count = input_len - trust_count
         for (i = 0; i < trust_count; i++) {
             if (all_char[i].classList.contains("non-cor")) {
                 all_char[i].classList.remove("non-cor");
@@ -141,11 +133,8 @@ window.onload = function() {
             }
         }
 
-
         if (trust_count == text_length) {
-            // sleep(6000)
             document.getElementById("test_end").classList.add("anim")
-
             setTimeout(() => {
                 letters = mostUsedLetters(mistake_arr.join(''))
                 res = ""
@@ -165,21 +154,51 @@ window.onload = function() {
                 document.getElementById("back_vid").style.display = "none";
                 document.getElementById("test_end").append(p)
             }, 1200);
-            // letters = mostUsedLetters(mistake_arr.join(''))
-            // res = ""
-            // for (i = 0; i < letters.length; i++) {
-            //     res += `${letters[i].letter} `
-            // }
-            // end = (new Date() - start) / 1000
-            // document.getElementById("test_end").innerHTML = `
-            //                                                 <p>time: ${end.toFixed(1)} s<br>
-            //                                                 wpm: ${((60 / end) * (text.split(' ')).length).toFixed(0)}<br>
-            //                                                 cpm: ${((60 / end) * text_length).toFixed(0)}<br>
-            //                                                 acc: ${(100 - (mistake / (text_length/100))).toFixed(1)}%<br>
-            //                                                 mistakes: ${res}</p>
-            //                                                 `
         }
     }
+    text_input.addEventListener("keydown", function(event) {
+        if (event.code == "ArrowLeft") {
+            curPositionNew = event.target.selectionStart
+            itemListParent.insertBefore(itemList[curPositionOld], itemList[curPositionNew])
+            curPositionOld = curPositionNew
+        }
+        if (event.code == "ArrowRight") {
+            curPositionNew = event.target.selectionStart
+            itemListParent.insertBefore(itemList[curPositionOld], itemList[curPositionNew + 1])
+            curPositionOld = curPositionNew
+        }
+    });
+    text_input.addEventListener('keyup', event => {
+        if (event.code == "ArrowLeft") {
+            // curPositionNew -= 1
+            // curPositionNew = Math.max(curPositionNew, 0)
+            // itemListParent.insertBefore(itemList[curPositionOld], itemList[curPositionNew])
+            // curPositionOld = curPositionNew
+            // console.log(Array.prototype.indexOf.call(itemList, caretka))
+            curPositionNew = event.target.selectionStart
+            itemListParent.insertBefore(itemList[curPositionOld], itemList[curPositionNew])
+            curPositionOld = curPositionNew
+        }
+        if (event.code == "ArrowRight") {
+            // curPositionNew += 1
+            // curPositionNew = Math.min(curPositionNew, input_len)
+            // itemListParent.insertBefore(itemList[curPositionOld], itemList[curPositionNew + 1])
+            // curPositionOld = curPositionNew
+            // console.log(Array.prototype.indexOf.call(itemList, caretka))
+            curPositionNew = event.target.selectionStart
+            itemListParent.insertBefore(itemList[curPositionOld], itemList[curPositionNew + 1])
+            curPositionOld = curPositionNew
+        }
+    });
+    // text_input.onfocus = function(event) {
+    //     caretka.classList.add("flashing")
+    // }
+    text_input.addEventListener('focusin', (event) => {
+        caretka.classList.add("flashing")
+    });
+    text_input.addEventListener('focusout', (event) => {
+        caretka.classList.remove("flashing")
+    });
 }
 
 function formatDate(date) {
@@ -206,16 +225,11 @@ function getResolution() {
 }
 
 function mostUsedLetters(sourceString) {
-    // фильтруем строку, оставив только буквы
-    // const filteredStr = sourceString.toLowerCase().replace(/[^а-яё]/g, '');
-    // считаем в объект кол-во вхождений каждой буквы, используя ее как ключ
     const charsCount = {};
     for (const chr of sourceString)
         charsCount[chr] = (charsCount[chr] || 0) + 1;
-    // преобразуем полученный объект в массив объектов
     const result = Object.keys(charsCount)
         .map(chr => ({ letter: chr, count: charsCount[chr] }));
-    // возвращаем отсортированный 
     return result.sort((a, b) => b.count - a.count);
 }
 
